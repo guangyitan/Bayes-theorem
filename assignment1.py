@@ -568,6 +568,7 @@ print("Thus, with log proabbility, the problem is overcomed as multiplication of
 
 '''Find and Remove correlated features'''
 import seaborn as sns
+import matplotlib.pyplot as plt
 from pandas import DataFrame
 df = DataFrame(dataset_without_labels)
 
@@ -578,8 +579,10 @@ print("----------------------------------------------------------------")
 correlations = df.corr()
 # plot the heatmap 
 sns.heatmap(correlations, xticklabels=correlations.columns, yticklabels=correlations.columns, annot=True)
+plt.savefig("heatmap.png")
 # plot the clustermap 
 sns.clustermap(correlations, xticklabels=correlations.columns, yticklabels=correlations.columns, annot=True)
+plt.savefig("clustermap.png")
 print("Heat map plot can only be displayed using .ipynb file format")
 print("From the heat map, we can see that feature 1 and feature 8 has very high total corelation score")
 print("feature 1 (Emotion_Joy): \t-0.034+0.7+0.62+0.52+0.25+0.26+0.092+0.2 = 2.608")
