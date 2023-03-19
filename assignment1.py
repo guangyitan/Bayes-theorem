@@ -583,7 +583,7 @@ plt.savefig("heatmap.png")
 # plot the clustermap 
 sns.clustermap(correlations, xticklabels=correlations.columns, yticklabels=correlations.columns, annot=True)
 plt.savefig("clustermap.png")
-print("Heat map plot can only be displayed using .ipynb file format")
+print("Heat map plot are saved in the same directory as \"heatmap.png\" and \"clustermap.png\".")
 print("From the heat map, we can see that feature 1 and feature 8 has very high total corelation score")
 print("feature 1 (Emotion_Joy): \t-0.034+0.7+0.62+0.52+0.25+0.26+0.092+0.2 = 2.608")
 print("feature 8 (Emotion_Neutral): \t-0.1+0.7+0.44+0.43+0.16+0.26+0.13+0.24 = 2.26")
