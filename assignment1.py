@@ -429,7 +429,7 @@ def OneR_classification(dataset_without_labels, train_labels):
 	Implements the OneR classification algorithm, which selects a single feature to make predictions.
 
 	Parameters
-	train_features (list of lists) : A list of training samples, where each sample is a list of feature values.
+	dataset_without_labels (list of lists) : A list of training samples, where each sample is a list of feature values.
 	train_labels (list) : A list of labels from the training set.
 		
 	Returns
@@ -615,3 +615,42 @@ predicted_labels_naive_bayes_dropJoy = predict_all(dataset_without_labels_dropJo
 # calculate accuracy of each classification algorithm
 accuracy_naive_bayes_dropJoy = calculate_accuracy(predicted_labels_naive_bayes_dropJoy, actual_labels)
 print("Accuracy of Naive Bayes Algorithm with Emotion_Joy and Emotion_Neutral removed: ", accuracy_naive_bayes_dropJoy)
+
+'''Remove features resulted from Weka Experiment'''
+print()
+print("Using Feature Selection Method after Experimenting with different Features using Weka")
+print("----------------------------------------------------------------")
+
+print("Through experimenting using Weka, it was found that the accuracy of the model increases by removing the features 'Gender', 'Emotion_Suprise' and 'Emotion_Neutral'")
+print("Dropping the features 'Gender', 'Emotion_Suprise' and 'Emotion_Neutral'")
+
+# remove corelated features
+dataset = load_csv(dataset_string)
+dataset = convert_categorical_to_numerical(dataset)
+dataset = convert_string_to_int(dataset)
+
+# remove column 0 Gender
+for row in dataset:
+    del row[0:1] 
+
+# remove column 6 Emotion_Surprise
+for row in dataset:
+    del row[5:6]
+
+# remove column 8 Emotion_Neutral
+for row in dataset:
+    del row[6:7]
+
+labels_list, seperated_dataset = split_data_by_labels(dataset)
+dataset_details = calculate_details(seperated_dataset)
+# get dataset without the labels
+dataset_without_labels_dropJoy = [row[:-1] for row in dataset]
+# get a list of actual labels of the dataset
+actual_labels = [row[-1] for row in dataset]
+
+# predict the labels with Naive Bayes classification algorithm
+predicted_labels_naive_bayes_dropJoy = predict_all(dataset_without_labels_dropJoy, labels_list, dataset_details)
+
+# calculate accuracy of each classification algorithm
+accuracy_naive_bayes_weka = calculate_accuracy(predicted_labels_naive_bayes_dropJoy, actual_labels)
+print("Accuracy of Naive Bayes Algorithm with 'Gender', 'Emotion_Suprise' and 'Emotion_Neutral' removed: ", accuracy_naive_bayes_weka)
